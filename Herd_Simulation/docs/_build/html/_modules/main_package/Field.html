@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>main_package.Field &#8212; Herd Simulation 18.06.2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=12dfc556" />
+    <script src="../../_static/documentation_options.js?v=fbbb934a"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for main_package.Field</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">main_package.Horse</span> <span class="kn">import</span> <span class="n">Draught</span><span class="p">,</span> <span class="n">Pony</span>
+
+
+<div class="viewcode-block" id="Field">
+<a class="viewcode-back" href="../../main_package.html#main_package.Field.Field">[docs]</a>
+<span class="k">class</span> <span class="nc">Field</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for a basic field on the map. Is used as a parent for other field variations.</span>
+<span class="sd">     Has 2 parameters: position_on_map and grass_Status and only method stat&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position_on_map</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">grass_status</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position_on_map</span> <span class="o">=</span> <span class="n">position_on_map</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grassStatus</span> <span class="o">=</span> <span class="n">grass_status</span>
+
+<div class="viewcode-block" id="Field.stat">
+<a class="viewcode-back" href="../../main_package.html#main_package.Field.Field.stat">[docs]</a>
+    <span class="k">def</span> <span class="nf">stat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method used to print out fields parameters, used while testing&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position_on_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grassStatus</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="Obstacle">
+<a class="viewcode-back" href="../../main_package.html#main_package.Field.Obstacle">[docs]</a>
+<span class="k">class</span> <span class="nc">Obstacle</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class which is a special variation and a child class to Field. Represents an obstacle that could harm</span>
+<span class="sd">     a horse object. Has one new parameter obs_type and one new method run_in_obstacle&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position_on_map</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">grass_status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">obs_type</span><span class="p">:</span> <span class="nb">chr</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">position_on_map</span><span class="p">,</span> <span class="n">grass_status</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs_type</span> <span class="o">=</span> <span class="n">obs_type</span>
+
+<div class="viewcode-block" id="Obstacle.run_in_obstacle">
+<a class="viewcode-back" href="../../main_package.html#main_package.Field.Obstacle.run_in_obstacle">[docs]</a>
+    <span class="k">def</span> <span class="nf">run_in_obstacle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method executes consequences if horse objects finds itself on obstacle field&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_type</span> <span class="o">==</span> <span class="s2">&quot;puddle&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">health</span> <span class="o">&lt;=</span> <span class="mi">95</span><span class="p">:</span>
+               <span class="n">obj</span><span class="o">.</span><span class="n">health</span> <span class="o">+=</span> <span class="mi">5</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_type</span> <span class="o">==</span> <span class="s2">&quot;rock&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Draught</span><span class="p">):</span>
+                <span class="n">newfield</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position_on_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grassStatus</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="fm">__del__</span><span class="p">()</span>
+            <span class="k">else</span> <span class="p">:</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">health</span> <span class="o">-=</span> <span class="mi">10</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_type</span> <span class="o">==</span> <span class="s2">&quot;wood&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Pony</span><span class="p">):</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">health</span> <span class="o">-=</span> <span class="mi">10</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_type</span> <span class="o">==</span> <span class="s2">&quot;forest&quot;</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">health</span> <span class="o">-=</span> <span class="mi">10</span></div>
+
+
+
+
+<div class="viewcode-block" id="Obstacle.stat">
+<a class="viewcode-back" href="../../main_package.html#main_package.Field.Obstacle.stat">[docs]</a>
+    <span class="k">def</span> <span class="nf">stat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method used to print out parameters of Obstacle&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position_on_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grassStatus</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_type</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method used to delete an obstacle field&quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="PredatorField">
+<a class="viewcode-back" href="../../main_package.html#main_package.Field.PredatorField">[docs]</a>
+<span class="k">class</span> <span class="nc">PredatorField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Child class of Field. Represents a field with predators that can harm a horse object. Checks predator and horses</span>
+<span class="sd">    stats and according to them takes away health points from horse object.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position_on_map</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">grass_status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pred_speed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pred_strenght</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">position_on_map</span><span class="p">,</span> <span class="n">grass_status</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pred_speed</span> <span class="o">=</span> <span class="n">pred_speed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pred_strenght</span> <span class="o">=</span> <span class="n">pred_strenght</span>
+
+<div class="viewcode-block" id="PredatorField.attack">
+<a class="viewcode-back" href="../../main_package.html#main_package.Field.PredatorField.attack">[docs]</a>
+    <span class="k">def</span> <span class="nf">attack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method comparing stats of horse and predator and executing the results&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">speed</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred_speed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">strenght</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred_strenght</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">health</span> <span class="o">-=</span> <span class="mi">20</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">strenght</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred_strenght</span><span class="p">:</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">health</span> <span class="o">-=</span> <span class="mi">80</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">health</span> <span class="o">-=</span> <span class="mi">40</span></div>
+
+
+<div class="viewcode-block" id="PredatorField.stat">
+<a class="viewcode-back" href="../../main_package.html#main_package.Field.PredatorField.stat">[docs]</a>
+    <span class="k">def</span> <span class="nf">stat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method that prints parameters of predator field&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position_on_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grassStatus</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="PredatorLair">
+<a class="viewcode-back" href="../../main_package.html#main_package.Field.PredatorLair">[docs]</a>
+<span class="k">class</span> <span class="nc">PredatorLair</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Child class of Field. Represents a field with many predators whom instantly kill a horse_object that would step</span>
+<span class="sd">    on it&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PredatorLair.group_attack">
+<a class="viewcode-back" href="../../main_package.html#main_package.Field.PredatorLair.group_attack">[docs]</a>
+    <span class="k">def</span> <span class="nf">group_attack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method killing a horse&quot;&quot;&quot;</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">health</span> <span class="o">-=</span> <span class="mi">100</span></div>
+
+
+<div class="viewcode-block" id="PredatorLair.stat">
+<a class="viewcode-back" href="../../main_package.html#main_package.Field.PredatorLair.stat">[docs]</a>
+    <span class="k">def</span> <span class="nf">stat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method that prints out parameters of predator lair&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position_on_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grassStatus</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Herd Simulation</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Herd_Simulation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Karolina Milewska.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
